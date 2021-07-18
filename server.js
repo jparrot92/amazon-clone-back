@@ -3,13 +3,14 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require('cors') // allow CORS policy to use to apps, node and nuxt in browser
 
-const User = require("./models/user");
+dotenv.config(); // use the file
 
-dotenv.config();
-
+// new express app
 const app = express()
 
+// connect to cloud mongo db user and pass, 2nd param warnings inserted
 mongoose.connect(
   process.env.DATABASE,
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -23,6 +24,7 @@ mongoose.connect(
 );
 
 //Middlewares
+app.use(cors())
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
