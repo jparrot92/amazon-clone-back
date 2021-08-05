@@ -1,10 +1,10 @@
-const router = require('express').Router()
-const Product = require('../models/product');
+const router = require("express").Router();
+const Product = require("../models/product");
 
-const upload = require('../middlewares/upload-photo');
+const upload = require("../middlewares/upload-photo");
 
 // POST request - create a new product
-router.post('/products', upload.single("photo"), async (req, res) => {
+router.post("/products", upload.single("photo"), async (req, res) => {
   try {
     let product = new Product();
     product.ownerID = req.body.ownerID;
@@ -19,50 +19,50 @@ router.post('/products', upload.single("photo"), async (req, res) => {
 
     res.json({
       status: true,
-      message: 'Successfully saved'
+      message: "Successfully saved",
     });
-  } catch(err){
+  } catch (err) {
     res.status(500).json({
       status: false,
-      message: err.message
+      message: err.message,
     });
   }
 });
 
 // GET request - create all product
-router.get('/products', async (req, res) => {
+router.get("/products", async (req, res) => {
   try {
-    let products = await Product.find();
+    let products = await Product.find().populate("owner category").exec();
     res.json({
       status: true,
-      products: products
+      products: products,
     });
-  } catch(err){
+  } catch (err) {
     res.status(500).json({
       status: false,
-      message: err.message
+      message: err.message,
     });
   }
 });
 
 // GET request - get a single product
-router.get('/products/:id', async (req, res) => {
+router.get("/products/:id", async (req, res) => {
   try {
     let product = await Product.findOne({ _id: req.params.id });
     res.json({
       status: true,
-      product: product
+      product: product,
     });
-  } catch(err){
+  } catch (err) {
     res.status(500).json({
       status: false,
-      message: err.message
+      message: err.message,
     });
   }
 });
 
 // PUT request - update a single product
-router.put('/products/:id', upload.single("photo"), async (req, res) => {
+router.put("/products/:id", upload.single("photo"), async (req, res) => {
   try {
     let product = await Product.findByIdAndUpdate(
       { _id: req.params.id },
@@ -73,38 +73,38 @@ router.put('/products/:id', upload.single("photo"), async (req, res) => {
           category: req.body.categoryID,
           photo: req.file.location,
           description: req.body.description,
-          owner: req.body.ownerID
-        }
+          owner: req.body.ownerID,
+        },
       },
-      { upsert: true },
+      { upsert: true }
     );
     res.json({
       status: true,
-      updatedProduct: product
+      updatedProduct: product,
     });
-  } catch(err){
+  } catch (err) {
     res.status(500).json({
       status: false,
-      message: err.message
+      message: err.message,
     });
   }
 });
 
 // DELETE request - delete a single product
-router.delete('/products/:id', async (req, res) => {
+router.delete("/products/:id", async (req, res) => {
   try {
     let deletedProduct = await Product.findOneAndDelete({ _id: req.params.id });
-    
-    if(deletedProduct){
+
+    if (deletedProduct) {
       res.json({
         status: true,
-        message: "Successfully deleted"
+        message: "Successfully deleted",
       });
     }
-  } catch(err){
+  } catch (err) {
     res.status(500).json({
       status: false,
-      message: err.message
+      message: err.message,
     });
   }
 });
