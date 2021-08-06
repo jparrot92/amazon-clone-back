@@ -1,8 +1,8 @@
-const router = require('express').Router();
-const Category = require('../models/category');
+const router = require("express").Router();
+const Category = require("../models/category");
 
 // POST request
-router.post('/categories', async (req, res) => {
+router.post("/categories", async (req, res) => {
   try {
     const category = new Category();
     category.type = req.body.type;
@@ -11,28 +11,28 @@ router.post('/categories', async (req, res) => {
 
     res.json({
       status: true,
-      message: "Successfuly created a new category"
+      message: "Successfuly created a new category",
     });
-  } catch(err){
+  } catch (err) {
     res.status(500).json({
       status: false,
-      message: err.message
+      message: err.message,
     });
   }
 });
 
 // GET request
-router.get('/categories', async (req, res) => {
+router.get("/categories", async (req, res) => {
   try {
     let categories = await Category.find();
     res.json({
       status: true,
-      categories: categories
+      categories: categories,
     });
-  } catch(err){
+  } catch (err) {
     res.status(500).json({
       status: false,
-      message: err.message
+      message: err.message,
     });
   }
 });
