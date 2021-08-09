@@ -3,22 +3,28 @@ import { Request, Response } from 'express'
 // Models
 import Owner from '../models/owner';
 
-export async function getOwners(req: Request, res: Response): Promise<Response> {
+export async function getOwners(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
-    let owners = await Owner.find();
+    const owners = await Owner.find();
     return res.json({
       status: true,
-      owners: owners
+      owners: owners,
     });
-  } catch(err){
+  } catch (err) {
     return res.status(500).json({
       status: false,
-      message: err.message
+      message: err.message,
     });
   }
-};
+}
 
-export async function createOwner(req: Request, res: Response): Promise<Response> {
+export async function createOwner(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
     const owner = new Owner();
     owner.name = req.body.name;
@@ -28,12 +34,12 @@ export async function createOwner(req: Request, res: Response): Promise<Response
 
     return res.json({
       status: true,
-      message: "Successfuly created a new owner"
+      message: 'Successfuly created a new owner',
     });
-  } catch(err){
+  } catch (err) {
     return res.status(500).json({
       status: false,
-      message: err.message
+      message: err.message,
     });
   }
-};
+}

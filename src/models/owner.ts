@@ -1,9 +1,9 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document } from 'mongoose';
 
 export interface IOwner extends Document {
-  name: String;
-  about: String;
-  photo: String;
+  name: string;
+  about: string;
+  photo: string;
 }
 
 const schema = new Schema({
@@ -12,4 +12,4 @@ const schema = new Schema({
   photo: String,
 });
 
-export default model<IOwner>("Owner", schema);
+export default model<IOwner>('Owner', schema);

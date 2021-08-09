@@ -1,11 +1,14 @@
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 
 // Models
 import Category from '../models/category';
 
-export async function getCategories(req: Request, res: Response): Promise<Response> {
+export async function getCategories(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
-    let categories = await Category.find();
+    const categories = await Category.find();
     return res.json({
       status: true,
       categories: categories,
@@ -16,9 +19,12 @@ export async function getCategories(req: Request, res: Response): Promise<Respon
       message: err.message,
     });
   }
-};
+}
 
-export async function createCategory(req: Request, res: Response): Promise<Response> {
+export async function createCategory(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
     const category = new Category();
     category.type = req.body.type;
@@ -27,7 +33,7 @@ export async function createCategory(req: Request, res: Response): Promise<Respo
 
     return res.json({
       status: true,
-      message: "Successfuly created a new category",
+      message: 'Successfuly created a new category',
     });
   } catch (err) {
     return res.status(500).json({
@@ -35,4 +41,4 @@ export async function createCategory(req: Request, res: Response): Promise<Respo
       message: err.message,
     });
   }
-};
+}

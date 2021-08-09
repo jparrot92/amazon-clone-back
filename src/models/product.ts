@@ -1,22 +1,21 @@
-import { Schema, model, Document } from "mongoose";
-import { ICategory } from "./category";
-import { IOwner } from "./owner";
-
+import { Schema, model, Document } from 'mongoose';
+import { ICategory } from './category';
+import { IOwner } from './owner';
 
 export interface IProduct extends Document {
-  category: ICategory["_id"];
-  owner: IOwner["_id"];
-  title: String;
-  description: String;
-  photo: String;
-  price: Number;
-  stockQuantity: Number;
-  rating: [Number];
+  category: ICategory['_id'];
+  owner: IOwner['_id'];
+  title: string;
+  description: string;
+  photo: string;
+  price: number;
+  stockQuantity: number;
+  rating: [number];
 }
 
 const schema = new Schema({
-  category: { type: Schema.Types.ObjectId, ref: "Category" },
-  owner: { type: Schema.Types.ObjectId, ref: "Owner" },
+  category: { type: Schema.Types.ObjectId, ref: 'Category' },
+  owner: { type: Schema.Types.ObjectId, ref: 'Owner' },
   title: String,
   description: String,
   photo: String,
@@ -25,4 +24,4 @@ const schema = new Schema({
   rating: [Number],
 });
 
-export default model<IProduct>("Product", schema);
+export default model<IProduct>('Product', schema);

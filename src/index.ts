@@ -1,9 +1,14 @@
-import express from "express";
-import morgan from "morgan";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import cors from "cors"; // allow CORS policy to use to apps, node and nuxt in browser
+import express from 'express';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import cors from 'cors';
+
+// require apis
+import productRoutes from './routes/product';
+import categoryRoutes from './routes/category';
+import ownerRoutes from './routes/owner'; // allow CORS policy to use to apps, node and nuxt in browser
 
 dotenv.config(); // use the file
 
@@ -20,25 +25,20 @@ mongoose.connect(
     if (err) {
       console.log(err);
     } else {
-      console.log("Connected to the database");
+      console.log('Connected to the database');
     }
   }
 );
 
-//Middlewares
+// Middlewares
 app.use(cors());
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// require apis
-import productRoutes from "./routes/product";
-import categoryRoutes from "./routes/category";
-import ownerRoutes from "./routes/owner";
-
-app.use("/api", productRoutes);
-app.use("/api", categoryRoutes);
-app.use("/api", ownerRoutes);
+app.use('/api', productRoutes);
+app.use('/api', categoryRoutes);
+app.use('/api', ownerRoutes);
 
 app.listen(PORT, () => {
   console.log(`Express with Typescript! http://localhost:${PORT}`);

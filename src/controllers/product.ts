@@ -1,11 +1,14 @@
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 
 // Models
 import Product from '../models/product';
 
-export async function getProducts(req: Request, res: Response): Promise<Response> {
+export async function getProducts(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
-    let products = await Product.find().populate("owner category").exec();
+    const products = await Product.find().populate('owner category').exec();
     return res.json({
       status: true,
       products: products,
@@ -16,12 +19,15 @@ export async function getProducts(req: Request, res: Response): Promise<Response
       message: err.message,
     });
   }
-};
+}
 
-export async function getProduct(req: Request, res: Response): Promise<Response> {
+export async function getProduct(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
-    let product = await Product.findOne({ _id: req.params.id })
-      .populate("owner category")
+    const product = await Product.findOne({ _id: req.params.id })
+      .populate('owner category')
       .exec();
     return res.json({
       status: true,
@@ -33,11 +39,14 @@ export async function getProduct(req: Request, res: Response): Promise<Response>
       message: err.message,
     });
   }
-};
+}
 
-export async function saveProduct(req: Request, res: Response): Promise<Response> {
+export async function saveProduct(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
-    let product = new Product();
+    const product = new Product();
     product.owner = req.body.ownerID;
     product.category = req.body.categoryID;
     product.title = req.body.title;
@@ -50,7 +59,7 @@ export async function saveProduct(req: Request, res: Response): Promise<Response
 
     return res.json({
       status: true,
-      message: "Successfully saved",
+      message: 'Successfully saved',
     });
   } catch (err) {
     return res.status(500).json({
@@ -58,11 +67,14 @@ export async function saveProduct(req: Request, res: Response): Promise<Response
       message: err.message,
     });
   }
-};
+}
 
-export async function updateProduct(req: Request, res: Response): Promise<Response> {
+export async function updateProduct(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
-    let product = await Product.findByIdAndUpdate(
+    const product = await Product.findByIdAndUpdate(
       { _id: req.params.id },
       {
         $set: {
@@ -86,16 +98,21 @@ export async function updateProduct(req: Request, res: Response): Promise<Respon
       message: err.message,
     });
   }
-};
+}
 
-export async function deleteProduct(req: Request, res: Response): Promise<Response> {
+export async function deleteProduct(
+  req: Request,
+  res: Response
+): Promise<Response> {
   try {
-    let deletedProduct = await Product.findOneAndDelete({ _id: req.params.id });
+    const deletedProduct = await Product.findOneAndDelete({
+      _id: req.params.id,
+    });
 
     if (deletedProduct) {
       return res.json({
         status: true,
-        message: "Successfully deleted",
+        message: 'Successfully deleted',
       });
     }
   } catch (err) {
@@ -104,4 +121,4 @@ export async function deleteProduct(req: Request, res: Response): Promise<Respon
       message: err.message,
     });
   }
-};
+}
