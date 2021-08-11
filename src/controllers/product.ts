@@ -9,14 +9,18 @@ export async function getProducts(
 ): Promise<Response> {
   try {
     const products = await Product.find().populate('owner category').exec();
-    return res.json({
-      status: true,
-      products: products,
+    return res.status(200).json({
+      success: true,
+      status: 200,
+      message: 'products listed',
+      data: products,
     });
   } catch (err) {
     return res.status(500).json({
-      status: false,
+      success: false,
+      status: 500,
       message: err.message,
+      data: {},
     });
   }
 }
@@ -29,14 +33,18 @@ export async function getProduct(
     const product = await Product.findOne({ _id: req.params.id })
       .populate('owner category')
       .exec();
-    return res.json({
-      status: true,
-      product: product,
+    return res.status(200).json({
+      success: true,
+      status: 200,
+      message: 'Product',
+      data: product,
     });
   } catch (err) {
     return res.status(500).json({
-      status: false,
+      success: false,
+      status: 500,
       message: err.message,
+      data: {},
     });
   }
 }
@@ -57,14 +65,18 @@ export async function saveProduct(
 
     await product.save();
 
-    return res.json({
-      status: true,
+    return res.status(200).json({
+      success: true,
+      status: 200,
       message: 'Successfully saved',
+      data: product,
     });
   } catch (err) {
     return res.status(500).json({
-      status: false,
+      success: false,
+      status: 500,
       message: err.message,
+      data: {},
     });
   }
 }
@@ -88,14 +100,18 @@ export async function updateProduct(
       },
       { upsert: true }
     );
-    return res.json({
-      status: true,
-      updatedProduct: product,
+    return res.status(200).json({
+      success: true,
+      status: 200,
+      message: 'Successfully update',
+      data: product,
     });
   } catch (err) {
     return res.status(500).json({
-      status: false,
+      success: false,
+      status: 500,
       message: err.message,
+      data: {},
     });
   }
 }
@@ -110,15 +126,19 @@ export async function deleteProduct(
     });
 
     if (deletedProduct) {
-      return res.json({
-        status: true,
+      return res.status(200).json({
+        success: true,
+        status: 200,
         message: 'Successfully deleted',
+        data: deletedProduct,
       });
     }
   } catch (err) {
     return res.status(500).json({
-      status: false,
+      success: false,
+      status: 500,
       message: err.message,
+      data: {},
     });
   }
 }

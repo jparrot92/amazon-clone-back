@@ -9,14 +9,18 @@ export async function getCategories(
 ): Promise<Response> {
   try {
     const categories = await Category.find();
-    return res.json({
-      status: true,
-      categories: categories,
+    return res.status(200).json({
+      success: true,
+      status: 200,
+      message: 'categories listed',
+      data: categories,
     });
   } catch (err) {
     return res.status(500).json({
-      status: false,
+      success: false,
+      status: 500,
       message: err.message,
+      data: {},
     });
   }
 }
@@ -31,14 +35,18 @@ export async function createCategory(
 
     await category.save();
 
-    return res.json({
-      status: true,
+    return res.status(201).json({
+      success: true,
+      status: 201,
       message: 'Successfuly created a new category',
+      data: category,
     });
   } catch (err) {
     return res.status(500).json({
-      status: false,
+      success: false,
+      status: 500,
       message: err.message,
+      data: {},
     });
   }
 }
