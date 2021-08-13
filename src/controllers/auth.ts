@@ -39,11 +39,37 @@ export async function signup(req: Request, res: Response): Promise<Response> {
 
 export async function signin(req: Request, res: Response): Promise<Response> {
   try {
-    return res.status(200).json({
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        status: 400,
+        message: 'Email or password is wrong',
+      });
+    }
+
+    const correctPassword: boolean = await user.validatePassword(
+      req.body.password
+    );
+
+    if (!correctPassword) {
+      return res.status(400).json({
+        success: false,
+        status: 400,
+        message: 'Invalid Password',
+      });
+    }
+
+    // token
+    const token: string = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET, {
+      expiresIn: 60 * 60 * 24,
+    });
+
+    return res.status(200).header('auth-token', token).json({
       success: true,
       status: 200,
-      message: 'categories listed',
-      data: {},
+      message: 'User logged in',
     });
   } catch (err) {
     return res.status(500).json({
