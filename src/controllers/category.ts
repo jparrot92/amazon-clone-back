@@ -20,7 +20,6 @@ export async function getCategories(
       success: false,
       status: 500,
       message: err.message,
-      data: {},
     });
   }
 }
@@ -46,7 +45,6 @@ export async function createCategory(
       success: false,
       status: 500,
       message: err.message,
-      data: {},
     });
   }
 }
