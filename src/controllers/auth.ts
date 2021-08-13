@@ -2,6 +2,11 @@ import { Request, Response } from 'express';
 import User, { IUser } from '../models/user';
 import jwt from 'jsonwebtoken';
 
+// 86400 Segundos = 1 Días
+const createToken = (user: IUser): string => {
+  return jwt.sign({ user }, process.env.TOKEN_SECRET, { expiresIn: 86400 });
+};
+
 export async function signup(req: Request, res: Response): Promise<Response> {
   try {
     // saving new user
@@ -14,18 +19,13 @@ export async function signup(req: Request, res: Response): Promise<Response> {
     const savedUser = await user.save();
 
     // token
-    const token: string = jwt.sign(
-      savedUser.toJSON(),
-      process.env.TOKEN_SECRET,
-      {
-        expiresIn: 60 * 60 * 24,
-      }
-    );
+    const token = createToken(user);
 
-    return res.status(201).header('auth-token', token).json({
+    return res.status(201).json({
       success: true,
       status: 201,
       message: 'User created',
+      token,
       data: savedUser,
     });
   } catch (err) {
@@ -62,21 +62,39 @@ export async function signin(req: Request, res: Response): Promise<Response> {
     }
 
     // token
-    const token: string = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET, {
-      expiresIn: 60 * 60 * 24,
-    });
+    const token = createToken(user);
 
-    return res.status(200).header('auth-token', token).json({
+    return res.status(200).json({
       success: true,
       status: 200,
-      message: 'User logged in',
+      message: 'Login succede',
+      token,
     });
   } catch (err) {
     return res.status(500).json({
       success: false,
       status: 500,
       message: err.message,
-      data: {},
+    });
+  }
+}
+
+export async function user(req: Request, res: Response): Promise<Response> {
+  try {
+    // saving new user
+    const user = await User.findOne({ _id: req.params.id });
+
+    return res.status(200).json({
+      success: true,
+      status: 200,
+      message: 'Profile user',
+      data: user,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      status: 500,
+      message: err.message,
     });
   }
 }
