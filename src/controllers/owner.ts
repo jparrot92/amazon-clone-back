@@ -32,9 +32,9 @@ export async function createOwner(
     owner.photo = (req as any).file.location;
     await owner.save();
 
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      status: 200,
+      status: 201,
       message: 'Successfuly created a new owner',
       data: owner,
     });

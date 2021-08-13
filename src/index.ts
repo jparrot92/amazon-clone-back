@@ -6,9 +6,10 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 // require apis
+import authRoutes from './routes/auth';
 import productRoutes from './routes/product';
 import categoryRoutes from './routes/category';
-import ownerRoutes from './routes/owner'; // allow CORS policy to use to apps, node and nuxt in browser
+import ownerRoutes from './routes/owner';
 
 dotenv.config(); // use the file
 
@@ -20,7 +21,7 @@ const PORT = 3000;
 // connect to cloud mongo db user and pass, 2nd param warnings inserted
 mongoose.connect(
   process.env.DATABASE,
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   (err) => {
     if (err) {
       console.log(err);
@@ -33,9 +34,10 @@ mongoose.connect(
 // Middlewares
 app.use(cors());
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/api/auth', authRoutes);
 app.use('/api', productRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', ownerRoutes);
