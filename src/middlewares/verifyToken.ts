@@ -33,7 +33,7 @@ export async function isAuthenticated(
 
     const payload: string | any = jwt.verify(token, process.env.TOKEN_SECRET);
 
-    req.params.id = payload.user._id;
+    req.user = payload.user;
 
     return next();
   } catch (e) {

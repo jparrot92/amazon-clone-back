@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
+    /* Basic Options */
     "outDir": "./dist",
     "target": "es6",
     "module": "commonjs",
     "sourceMap": true,
+    /* Module Resolution Options */
     "esModuleInterop": true,
+
+    "typeRoots" : ["./src/types", "./node_modules/@types"]
   },
   "include": [
     "src/**/*.ts"

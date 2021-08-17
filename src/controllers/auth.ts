@@ -79,10 +79,10 @@ export async function signin(req: Request, res: Response): Promise<Response> {
   }
 }
 
-export async function user(req: Request, res: Response): Promise<Response> {
+export async function getUser(req: Request, res: Response): Promise<Response> {
   try {
     // saving new user
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await User.findOne({ _id: req.user._id });
 
     return res.status(200).json({
       success: true,
@@ -90,6 +90,36 @@ export async function user(req: Request, res: Response): Promise<Response> {
       message: 'Profile user',
       data: user,
     });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      status: 500,
+      message: err.message,
+    });
+  }
+}
+
+export async function updateUser(
+  req: Request,
+  res: Response
+): Promise<Response> {
+  try {
+    const foundUser = await User.findOne({ _id: req.user._id });
+
+    if (foundUser) {
+      if (req.body.name) foundUser.name = req.body.name;
+      if (req.body.email) foundUser.email = req.body.email;
+      if (req.body.password) foundUser.password = req.body.password;
+
+      await foundUser.save();
+
+      return res.status(200).json({
+        success: true,
+        status: 200,
+        message: 'successfully updated',
+        data: foundUser,
+      });
+    }
   } catch (err) {
     return res.status(500).json({
       success: false,
