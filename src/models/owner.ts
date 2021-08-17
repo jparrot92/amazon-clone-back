@@ -6,10 +6,10 @@ export interface IOwner extends Document {
   photo: string;
 }
 
-const schema = new Schema({
+const ownerSchema = new Schema({
   name: String,
   about: String,
   photo: String,
 });
 
-export default model<IOwner>('Owner', schema);
+export default model<IOwner>('Owner', ownerSchema);
