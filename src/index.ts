@@ -2,8 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import cors from 'cors';
+import config from './config';
 
 // require apis
 import authRoutes from './routes/auth';
@@ -12,8 +12,6 @@ import categoryRoutes from './routes/category';
 import ownerRoutes from './routes/owner';
 import reviewRoutes from './routes/review';
 
-dotenv.config(); // use the file
-
 // new express app
 const app = express();
 
@@ -21,7 +19,7 @@ const PORT = 3000;
 
 // connect to cloud mongo db user and pass, 2nd param warnings inserted
 mongoose.connect(
-  process.env.DATABASE,
+  config.dataBase,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   (err) => {
     if (err) {

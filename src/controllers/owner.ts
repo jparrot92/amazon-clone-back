@@ -9,13 +9,16 @@ export async function getOwners(
 ): Promise<Response> {
   try {
     const owners = await Owner.find();
-    return res.json({
-      status: true,
-      owners: owners,
+    return res.status(200).json({
+      success: true,
+      status: 200,
+      message: 'categories listed',
+      data: owners,
     });
   } catch (err) {
     return res.status(500).json({
-      status: false,
+      success: false,
+      status: 500,
       message: err.message,
     });
   }
