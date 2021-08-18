@@ -10,7 +10,7 @@ export interface IProduct extends Document {
   photo: string;
   price: number;
   stockQuantity: number;
-  rating: IReview['_id'];
+  rating: [IReview['_id']];
 }
 
 const productSchema = new Schema({

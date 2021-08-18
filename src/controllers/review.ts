@@ -17,7 +17,10 @@ export async function createReview(
     review.user = req.user._id;
     review.product = req.params.productID;
 
-    await Product.update({ $push: { rating: review._id } });
+    await Product.findOneAndUpdate(
+      { _id: review.product },
+      { $push: { rating: review._id } }
+    );
 
     const savedReview = await review.save();
 
@@ -43,7 +46,7 @@ export async function getReview(
   res: Response
 ): Promise<Response> {
   try {
-    const productReviews = await Review.find({ _id: req.params.productID })
+    const productReviews = await Review.find({ product: req.params.productID })
       .populate('user')
       .exec();
     return res.status(200).json({
