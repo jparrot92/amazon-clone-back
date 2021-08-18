@@ -37,3 +37,26 @@ export async function createReview(
     });
   }
 }
+
+export async function getReview(
+  req: Request,
+  res: Response
+): Promise<Response> {
+  try {
+    const productReviews = await Review.find({ _id: req.params.productID })
+      .populate('user')
+      .exec();
+    return res.status(200).json({
+      success: true,
+      status: 200,
+      message: 'Review',
+      data: productReviews,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      status: 500,
+      message: err.message,
+    });
+  }
+}
