@@ -44,7 +44,6 @@ export async function getProduct(
       success: false,
       status: 500,
       message: err.message,
-      data: {},
     });
   }
 }
@@ -76,7 +75,6 @@ export async function saveProduct(
       success: false,
       status: 500,
       message: err.message,
-      data: {},
     });
   }
 }
@@ -111,7 +109,6 @@ export async function updateProduct(
       success: false,
       status: 500,
       message: err.message,
-      data: {},
     });
   }
 }
@@ -138,7 +135,6 @@ export async function deleteProduct(
       success: false,
       status: 500,
       message: err.message,
-      data: {},
     });
   }
 }
