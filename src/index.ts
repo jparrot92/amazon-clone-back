@@ -10,6 +10,7 @@ import authRoutes from './routes/auth';
 import productRoutes from './routes/product';
 import categoryRoutes from './routes/category';
 import ownerRoutes from './routes/owner';
+import reviewRoutes from './routes/review';
 
 dotenv.config(); // use the file
 
@@ -41,6 +42,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api', productRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', ownerRoutes);
+app.use('/api', reviewRoutes);
 
 app.listen(PORT, () => {
   console.log(`Express with Typescript! http://localhost:${PORT}`);

@@ -21,7 +21,7 @@ const productSchema = new Schema({
   photo: String,
   price: Number,
   stockQuantity: Number,
-  rating: { type: Schema.Types.ObjectId, ref: 'Review' },
+  rating: [{ type: Schema.Types.ObjectId, ref: 'Review' }],
 });
 
 export default model<IProduct>('Product', productSchema);
