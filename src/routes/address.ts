@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   getAddresses,
+  getAddress,
   createAddress,
   updateAddress,
   getCountries,
@@ -13,6 +14,9 @@ const router = Router();
 
 // GET API Get all addresses
 router.get('/addresses', isAuthenticated, getAddresses);
+
+// GET API -- Get one address for update
+router.get('/addresses/:id', isAuthenticated, getAddress);
 
 // POST API -- Create an address
 router.post('/addresses', isAuthenticated, createAddress);

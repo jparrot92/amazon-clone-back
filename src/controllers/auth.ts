@@ -82,7 +82,7 @@ export async function signin(req: Request, res: Response): Promise<Response> {
 export async function getUser(req: Request, res: Response): Promise<Response> {
   try {
     // saving new user
-    const user = await User.findOne({ _id: req.user._id });
+    const user = await User.findOne({ _id: req.user._id }).populate('address');
 
     return res.status(200).json({
       success: true,
