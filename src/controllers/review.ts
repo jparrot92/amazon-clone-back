@@ -19,7 +19,7 @@ export async function createReview(
 
     await Product.findOneAndUpdate(
       { _id: review.product },
-      { $push: { rating: review._id } }
+      { $push: { reviews: review._id } }
     );
 
     const savedReview = await review.save();

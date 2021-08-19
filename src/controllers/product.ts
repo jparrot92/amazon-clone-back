@@ -8,7 +8,10 @@ export async function getProducts(
   res: Response
 ): Promise<Response> {
   try {
-    const products = await Product.find().populate('owner category').exec();
+    const products = await Product.find()
+      .populate('owner category')
+      .populate('reviews', 'rating')
+      .exec();
     return res.status(200).json({
       success: true,
       status: 200,
@@ -32,6 +35,7 @@ export async function getProduct(
   try {
     const product = await Product.findOne({ _id: req.params.id })
       .populate('owner category')
+      .populate('reviews', 'rating')
       .exec();
     return res.status(200).json({
       success: true,
