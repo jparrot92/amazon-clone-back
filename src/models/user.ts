@@ -1,10 +1,11 @@
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
+import { IAddress } from './address';
 export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  // address: string;
+  address: IAddress['_id'];
   encrypPassword(password: string): Promise<string>;
   validatePassword(password: string): Promise<boolean>;
 }
@@ -13,7 +14,7 @@ const userSchema = new Schema<IUser>({
   name: String,
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  // address: { type: Schema.Types.ObjectId, ref: 'Address' },
+  address: { type: Schema.Types.ObjectId, ref: 'Address' },
 });
 
 userSchema.methods.encrypPassword = async (
