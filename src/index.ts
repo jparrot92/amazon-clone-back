@@ -12,6 +12,7 @@ import categoryRoutes from './routes/category';
 import ownerRoutes from './routes/owner';
 import reviewRoutes from './routes/review';
 import addressRoutes from './routes/address';
+import paymentRoutes from './routes/payment';
 
 // new express app
 const app = express();
@@ -43,6 +44,7 @@ app.use('/api', categoryRoutes);
 app.use('/api', ownerRoutes);
 app.use('/api', reviewRoutes);
 app.use('/api', addressRoutes);
+app.use('/api', paymentRoutes);
 
 app.listen(PORT, () => {
   console.log(`Express with Typescript! http://localhost:${PORT}`);
