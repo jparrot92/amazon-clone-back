@@ -76,19 +76,14 @@ export async function createPayment(
     const order = new Order();
     const cart = req.body.cart;
 
-    cart.map((product: any) =>
-      // eslint-disable-next-line promise/always-return
-      Product.findOne({ _id: product._id }).then(
-        // eslint-disable-next-line promise/always-return
-        (verifiedProduct: IProduct) => {
-          order.products.push({
-            productID: verifiedProduct,
-            quantity: parseInt(product.quantity),
-            price: product.price,
-          });
-        }
-      )
-    );
+    // eslint-disable-next-line array-callback-return
+    cart.map((product) => {
+      order.products.push({
+        productID: product._id,
+        quantity: parseInt(product.quantity),
+        price: product.price,
+      });
+    });
 
     order.owner = req.user._id;
     order.estimatedDelivery = req.body.estimatedDelivery;
