@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import config from '../config';
 import Order from '../models/order';
-import Product, { IProduct } from '../models/product';
 import moment from 'moment';
 import Stripe from 'stripe';
 

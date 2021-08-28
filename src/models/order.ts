@@ -1,14 +1,13 @@
 import { Schema, model, Document } from 'mongoose';
 import { IProduct } from './product';
 import { IUser } from './user';
-
 export interface IOrder extends Document {
   owner: IUser['_id'];
   products: [IProduct['_id'], number, number];
   estimatedDelivery: string;
 }
 
-const orderSchema = new Schema({
+const orderSchema = new Schema<IOrder>({
   owner: { type: Schema.Types.ObjectId, ref: 'User' },
   products: [
     {
