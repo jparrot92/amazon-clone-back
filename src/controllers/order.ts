@@ -9,13 +9,20 @@ export async function getOrders(
 ): Promise<Response> {
   try {
     const products = await Order.find({ owner: req.user._id })
-      .populate('owner products.productID')
+      .populate('owner')
+      .populate({
+        path: 'products.productID',
+        populate: {
+          path: 'owner',
+          model: 'Owner',
+        },
+      })
       .exec();
 
     return res.status(200).json({
       success: true,
       status: 200,
-      message: 'categories listed',
+      message: 'Order',
       data: products,
     });
   } catch (err) {
